@@ -1,7 +1,6 @@
-// Project Title
-// Your Name
-// Date
-//
+// CS30 MAJOR PROJECT
+// Aaraiz Afridi
+
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
