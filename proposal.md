@@ -10,7 +10,7 @@ A 2d platformer where the main character has a gun. He has to jump on platforms 
 
 ## Needs to have
 - A main character that moves
-- A physics engine
+- A physics engine (use p5play)
 - The main character's weapon
 - different enemy types
 - multiple levels
