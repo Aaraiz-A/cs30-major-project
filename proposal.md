@@ -2,7 +2,7 @@
 
 
 ## Description
-A 2d platformer where the main character has a gun. He has to jump on platforms and has to get rid of his enemies. There will be multiple levels, and each will get more difficult as they go. There will also be a shop where the player can upgrade themselves.
+A 2d platformer where the main character has a gun. He has to jump on platforms and has to get rid of his enemies. There will be multiple levels, and each will get more difficult as they go.
 
 ## Extra Notes
 - Worked on p5play demo's the first few days (started making code later)
@@ -10,19 +10,17 @@ A 2d platformer where the main character has a gun. He has to jump on platforms 
 
 ## Needs to have
 - A main character that moves
-- A physics engine (use p5play)
+- A physics engine (using p5play)
 - The main character's weapon
-- different enemy types
-- multiple levels
-- A shop where the main character can upgrade themselves
+- an enemy type
+- at least 2 levels
 - Death
-- enemy weapons
 - Camera is centered around the main character
 - main character has lives/health bar
 
 ## Nice to have
 - Sprites for the project
-- lots of available upgrades for the main character
+- A shop where the main character can upgrade themselves
 - dynamic lighting
 - Character's gun will follow the mouse
 - everytime the main character gets hit (or any other entity), an animation happens
@@ -32,6 +30,6 @@ A 2d platformer where the main character has a gun. He has to jump on platforms 
 - health bar for any entity
 - fast paced movement
 - level design with sprites
-- enemy variety goes in depth
-
+- different enemy types
+- depending on the enemy, there will be different enemy weapons
 
