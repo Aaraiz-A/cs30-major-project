@@ -21,7 +21,7 @@ A 2d platformer where the main character has a gun. He has to jump on platforms 
 ## Nice to have
 - Sprites for the project
 - A shop where the main character can upgrade themselves
-- dynamic lighting
+- dynamic lighting (big big big maybe)
 - Character's gun will follow the mouse
 - everytime the main character gets hit (or any other entity), an animation happens
 - if any entity dies, an animation happens
@@ -32,4 +32,5 @@ A 2d platformer where the main character has a gun. He has to jump on platforms 
 - level design with sprites
 - different enemy types
 - depending on the enemy, there will be different enemy weapons
+- collectibles
 

@@ -1,16 +1,12 @@
-// CS30 MAJOR PROJECT
-// Aaraiz Afridi
-
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
-
+let floor, ball;
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-}
+  new Canvas(500, 200);
+  world.gravity.y = 10;
 
-function draw() {
-  background(220);
+  //                ([vertex0, vertex1, vertex2, ...])
+  floor = new Sprite([[20, 60], [200, 140], [450, 180]]);
+  floor.collider = "static";
 
-  square(mouseX, mouseY, 100);
+  ball = new Sprite(40, 0, 20);
 }
