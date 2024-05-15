@@ -3,6 +3,7 @@
 
 let player;
 let platform;
+let mainCharacterGun;
 const WORLD_GRAVITY = 9.8;
 let canJump = true;
 
@@ -11,7 +12,8 @@ function setup() {
   world.gravity.y = WORLD_GRAVITY;
 
   mainCharacter();
-  thePlatform();
+  thePlatforms();
+  theGun();
 }
 
 function draw() {
@@ -25,8 +27,14 @@ function mainCharacter() {
   player.color = "green";
 }
 
+function theGun() {
+  mainCharacterGun = new Sprite(100, 100, 100, 10);
+  mainCharacterGun.mass = 0;
+  mainCharacterGun.moveTowards(mouse);
+}
+
 //remove this stuff
-function thePlatform(x, y, wid, hei) {
+function thePlatforms() {
   platform = new Sprite(width/2, height/2 + 50, 100, 20, "static");
   platform.color = "red";
 }
