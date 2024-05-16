@@ -9,13 +9,13 @@ A 2d platformer where the main character has a gun. He has to jump on platforms 
 - Worked on 2d arrays questions on one day
 
 ## Needs to have
-- A main character that moves
-- A physics engine (using p5play)
-- The main character's weapon
+- A main character that moves (done)
+- A physics engine (using p5play) (done)
+- The main character's weapon 
 - an enemy type
 - at least 2 levels
 - Death
-- Camera is centered around the main character
+- Camera is centered around the main character (done)
 - main character has lives/health bar
 
 ## Nice to have

@@ -7,19 +7,22 @@ let mainCharacterGun;
 const WORLD_GRAVITY = 9.8;
 let canJump = true;
 
+
 function setup() {
-  new Canvas(windowWidth, windowHeight);
+  new Canvas(600, 600);
   world.gravity.y = WORLD_GRAVITY;
 
   mainCharacter();
   thePlatforms();
-  theGun();
+  theGunCharacteristics();
 }
 
 function draw() {
-  background(255);
+  background(155);
   theCamera();
   playerMovement();
+  theGunBehaviour();
+  shootyShoot();
 }
 
 function mainCharacter() {
@@ -27,10 +30,9 @@ function mainCharacter() {
   player.color = "green";
 }
 
-function theGun() {
-  mainCharacterGun = new Sprite(100, 100, 100, 10);
+function theGunCharacteristics() {
+  mainCharacterGun = new Sprite(width/2, height/2, 20, 10);
   mainCharacterGun.mass = 0;
-  mainCharacterGun.moveTowards(mouse);
 }
 
 //remove this stuff
@@ -63,4 +65,15 @@ function playerMovement() {
 function theCamera() {
   camera.x = player.x;
   camera.y = player.y;
+}
+
+function theGunBehaviour() {
+  mainCharacterGun.rotateTowards(mouse, 0.1, 0);
+  let jH = new HingeJoint(player, mainCharacterGun);
+}
+
+function shootyShoot() {
+  if (mouse.presses()) {
+    new Sprite(mouse.x, mouse.y, 6);
+  }
 }
