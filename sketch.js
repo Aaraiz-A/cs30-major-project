@@ -8,6 +8,7 @@ const WORLD_GRAVITY = 9.8;
 let canJump = true;
 
 
+
 function setup() {
   new Canvas(600, 600);
   world.gravity.y = WORLD_GRAVITY;
@@ -63,8 +64,8 @@ function playerMovement() {
 }
 
 function theCamera() {
-  camera.x = player.x;
-  camera.y = player.y;
+  camera.x = mouseX;
+  camera.y = mouseY;
 }
 
 function theGunBehaviour() {
@@ -74,6 +75,10 @@ function theGunBehaviour() {
 
 function shootyShoot() {
   if (mouse.presses()) {
-    new Sprite(mouse.x, mouse.y, 6);
+    let bullet = new Sprite(mouse.x, mouse.y, 6);
+    // bullet.direction = value;
+    bullet.speed = 10;
+    
+    
   }
 }
