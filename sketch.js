@@ -6,7 +6,7 @@ let platform;
 let mainCharacterGun;
 const WORLD_GRAVITY = 9.8;
 let canJump = true;
-
+let bullets = [];
 
 
 function setup() {
@@ -64,21 +64,26 @@ function playerMovement() {
 }
 
 function theCamera() {
-  camera.x = mouseX;
-  camera.y = mouseY;
+  // camera.x = mouseX;
+  // camera.y = mouseY;
+
+  camera.x = player.x;
+  camera.y = player.y;
 }
 
 function theGunBehaviour() {
   mainCharacterGun.rotateTowards(mouse, 0.1, 0);
-  let jH = new HingeJoint(player, mainCharacterGun);
+  mainCharacterGun.x = player.x;
+  mainCharacterGun.y = player.y;
 }
 
 function shootyShoot() {
   if (mouse.presses()) {
-    let bullet = new Sprite(mouse.x, mouse.y, 6);
-    // bullet.direction = value;
-    bullet.speed = 10;
-    
-    
+    let angle = atan2(mouse.y - mainCharacterGun.y, mouse.x - mainCharacterGun.x);
+    let bullet = new Sprite(mainCharacterGun.x, mainCharacterGun.y, 6);
+    bullet.color = "black";
+    bullet.vel.x = 10 * cos(angle);
+    bullet.vel.y = 10 * sin(angle);
+    bullets.push(bullet);
   }
 }
