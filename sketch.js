@@ -2,11 +2,48 @@
 // CS30 Major Project
 
 let player;
-let platform;
+let platforms = [];
 let mainCharacterGun;
 const WORLD_GRAVITY = 9.8;
 let canJump = true;
 let bullets = [];
+
+class platform {
+  constructor(x, y, w, h) {
+    this.sprite = new Sprite(x, y, w, h, "static");
+    this.sprite.color = "red";
+  }
+}
+
+class Level {
+  constructor () {
+    this.platforms = [];
+    this.boundaries = {
+      left: new Sprite(-100, height/2, 100, height),
+      right: new Sprite(width + 100, height /2, 100, height),
+      top: new Sprite(width/2, -100, width, 100),
+      bottom: new Sprite(width/2, height + 100, width, 100)
+    };
+
+    this.platforms.push(new Platform(50, 500, 100, 20));
+    this.platforms.push(new Platform(350, 300, 100, 20));
+    this.platforms.push(new Platform(550, 500, 100, 20));
+  }
+
+  draw() {
+    for (let i = 0; i < this.platforms.length; i++) {
+      this.platforms[i].sprite.draw();
+    }
+
+    for (let boundary in this.boundaries) {
+      this.boundaries[boundary].draw();
+    }
+  }
+
+  collides(sprites) {
+    for (let i = 0; i < this.platforms.length)
+  }
+}
 
 
 function setup() {
@@ -24,6 +61,7 @@ function draw() {
   playerMovement();
   theGunBehaviour();
   shootyShoot();
+  updateBullet();
 }
 
 function mainCharacter() {
@@ -79,11 +117,20 @@ function theGunBehaviour() {
 
 function shootyShoot() {
   if (mouse.presses()) {
-    let angle = atan2(mouse.y - mainCharacterGun.y, mouse.x - mainCharacterGun.x);
+    let angle = mainCharacterGun.rotation;
     let bullet = new Sprite(mainCharacterGun.x, mainCharacterGun.y, 6);
     bullet.color = "black";
-    bullet.vel.x = 10 * cos(angle);
-    bullet.vel.y = 10 * sin(angle);
+    let speed = 8;
+    bullet.vel.x = speed * cos(angle);
+    bullet.vel.y = speed * sin(angle);
     bullets.push(bullet);
+  }
+}
+
+function updateBullet() {
+  for (let i = 0; i < bullets.length; i++) {
+    let bullet = bullets[i];
+    bullet.x += bullet.vel.x;
+    bullet.y += bullet.vel.y;
   }
 }
