@@ -7,8 +7,9 @@ let mainCharacterGun;
 const WORLD_GRAVITY = 9.8;
 let canJump = true;
 let bullets = [];
+let level;
 
-class platform {
+class Platform {
   constructor(x, y, w, h) {
     this.sprite = new Sprite(x, y, w, h, "static");
     this.sprite.color = "red";
@@ -41,7 +42,18 @@ class Level {
   }
 
   collides(sprites) {
-    for (let i = 0; i < this.platforms.length)
+    for (let i = 0; i < this.platforms.length; i++) {
+      if (this.platforms[i].sprite.collides(sprite)) {
+        return true;
+      }
+    }
+    for (let boundary in this.boundaries) {
+      if (this.boundaries[boundary].collides(sprite)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }
 
@@ -51,8 +63,8 @@ function setup() {
   world.gravity.y = WORLD_GRAVITY;
 
   mainCharacter();
-  thePlatforms();
   theGunCharacteristics();
+  level = new Level();
 }
 
 function draw() {
@@ -62,6 +74,12 @@ function draw() {
   theGunBehaviour();
   shootyShoot();
   updateBullet();
+
+  level.draw();
+
+  if (level.collides(player)) {
+    canJump = true;
+  }
 }
 
 function mainCharacter() {
@@ -72,12 +90,6 @@ function mainCharacter() {
 function theGunCharacteristics() {
   mainCharacterGun = new Sprite(width/2, height/2, 20, 10);
   mainCharacterGun.mass = 0;
-}
-
-//remove this stuff
-function thePlatforms() {
-  platform = new Sprite(width/2, height/2 + 50, 100, 20, "static");
-  platform.color = "red";
 }
 
 function playerMovement() {
