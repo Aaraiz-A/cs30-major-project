@@ -2,60 +2,11 @@
 // CS30 Major Project
 
 let player;
-let platforms = [];
+let platform;
 let mainCharacterGun;
 const WORLD_GRAVITY = 9.8;
 let canJump = true;
 let bullets = [];
-let level;
-
-class Platform {
-  constructor(x, y, w, h) {
-    this.sprite = new Sprite(x, y, w, h, "static");
-    this.sprite.color = "red";
-  }
-}
-
-class Level {
-  constructor () {
-    this.platforms = [];
-    this.boundaries = {
-      left: new Sprite(-100, height/2, 100, height),
-      right: new Sprite(width + 100, height /2, 100, height),
-      top: new Sprite(width/2, -100, width, 100),
-      bottom: new Sprite(width/2, height + 100, width, 100)
-    };
-
-    this.platforms.push(new Platform(50, 500, 100, 20));
-    this.platforms.push(new Platform(350, 300, 100, 20));
-    this.platforms.push(new Platform(550, 500, 100, 20));
-  }
-
-  draw() {
-    for (let i = 0; i < this.platforms.length; i++) {
-      this.platforms[i].sprite.draw();
-    }
-
-    for (let boundary in this.boundaries) {
-      this.boundaries[boundary].draw();
-    }
-  }
-
-  collides(sprites) {
-    for (let i = 0; i < this.platforms.length; i++) {
-      if (this.platforms[i].sprite.collides(sprite)) {
-        return true;
-      }
-    }
-    for (let boundary in this.boundaries) {
-      if (this.boundaries[boundary].collides(sprite)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-}
 
 
 function setup() {
@@ -64,7 +15,7 @@ function setup() {
 
   mainCharacter();
   theGunCharacteristics();
-  level = new Level();
+  thePlatforms();
 }
 
 function draw() {
@@ -74,12 +25,6 @@ function draw() {
   theGunBehaviour();
   shootyShoot();
   updateBullet();
-
-  level.draw();
-
-  if (level.collides(player)) {
-    canJump = true;
-  }
 }
 
 function mainCharacter() {
@@ -112,6 +57,12 @@ function playerMovement() {
     player.vel.x = 0;
   }
 }
+
+function thePlatforms() {
+  platform = new Sprite(width/2, height/2 + 50, 100, 20, "static");
+  platform.color = "red";
+}
+
 
 function theCamera() {
   // camera.x = mouseX;
