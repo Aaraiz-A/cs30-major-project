@@ -2,6 +2,7 @@
 // CS30 Major Project
 
 let player;
+let enemy1;
 let platform;
 let mainCharacterGun;
 const WORLD_GRAVITY = 9.8;
@@ -14,6 +15,7 @@ function setup() {
   world.gravity.y = WORLD_GRAVITY;
 
   mainCharacter();
+  theEnemy1();
   theGunCharacteristics();
   thePlatforms();
 }
@@ -30,6 +32,10 @@ function draw() {
 function mainCharacter() {
   player = new Sprite(width/2, height/2, 20);
   player.color = "green";
+}
+
+function theEnemy1() {
+  enemy1 = new Sprite(random(0, width), random(0, height), 20);
 }
 
 function theGunCharacteristics() {
