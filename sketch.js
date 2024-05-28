@@ -36,6 +36,7 @@ function mainCharacter() {
 
 function theEnemy1() {
   enemy1 = new Sprite(random(0, width), random(0, height), 20);
+  enemy1.moveTowards(player);
 }
 
 function theGunCharacteristics() {
