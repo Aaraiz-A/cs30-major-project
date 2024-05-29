@@ -8,6 +8,7 @@ let mainCharacterGun;
 const WORLD_GRAVITY = 9.8;
 let canJump = true;
 let bullets = [];
+let dist1;
 
 
 function setup() {
@@ -27,6 +28,7 @@ function draw() {
   theGunBehaviour();
   shootyShoot();
   updateBullet();
+  theEnemy1Behaviour();
 }
 
 function mainCharacter() {
@@ -36,7 +38,12 @@ function mainCharacter() {
 
 function theEnemy1() {
   enemy1 = new Sprite(random(0, width), random(0, height), 20);
+}
+
+function theEnemy1Behaviour() {
   enemy1.moveTowards(player);
+  let dist1 = dist(player.x, player.y, enemy1.x, enemy1.y);
+
 }
 
 function theGunCharacteristics() {
