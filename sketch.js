@@ -6,6 +6,7 @@ let enemy1;
 let platform;
 let mainCharacterGun;
 const WORLD_GRAVITY = 9.8;
+const ENEMY1_SPEED = 3;
 let canJump = true;
 let bullets = [];
 let dist1;
@@ -37,14 +38,22 @@ function mainCharacter() {
 }
 
 function theEnemy1() {
-  enemy1 = new Sprite(random(0, width), random(0, height), 20);
+  let x;
+  let y;
+  do {
+    x = random(0, width);
+    y = random(0, height/2);
+  } 
+  while (dist(x, y, player.x, player.y) < 100);
+  
+  enemy1 = new Sprite(x, y, 20);
 }
+
 
 function theEnemy1Behaviour() {
-  enemy1.moveTowards(player);
-  let dist1 = dist(player.x, player.y, enemy1.x, enemy1.y);
-
+  enemy1.moveTo(player, ENEMY1_SPEED);
 }
+
 
 function theGunCharacteristics() {
   mainCharacterGun = new Sprite(width/2, height/2, 20, 10);
@@ -77,7 +86,6 @@ function thePlatforms() {
   platform.color = "red";
 }
 
-
 function theCamera() {
   // camera.x = mouseX;
   // camera.y = mouseY;
@@ -109,5 +117,15 @@ function updateBullet() {
     let bullet = bullets[i];
     bullet.x += bullet.vel.x;
     bullet.y += bullet.vel.y;
+
+    if (bullet.collides(enemy1)) {
+      bullets.splice(i, 1);
+      i--;
+
+      enemy1.remove();
+      enemy1 = null;
+
+      theEnemy1();
+    }
   }
 }
