@@ -38,13 +38,19 @@ function mainCharacter() {
 }
 
 function theEnemy1() {
-  let x;
+  let x
   let y;
-  do {
+  let distance;
+  
+  x = random(0, width);
+  y = random(0, height/2);
+  distance = dist(x, y, player.x, player.y);
+  
+  while (distance < 100) {
     x = random(0, width);
     y = random(0, height/2);
-  } 
-  while (dist(x, y, player.x, player.y) < 100);
+    distance = dist(x, y, player.x, player.y);
+  }
   
   enemy1 = new Sprite(x, y, 20);
 }
