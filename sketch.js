@@ -9,7 +9,9 @@ const WORLD_GRAVITY = 9.8;
 const ENEMY1_SPEED = 3;
 let canJump = true;
 let bullets = [];
+let platforms = [];
 let dist1;
+let playerHealth = 100;
 
 
 function setup() {
@@ -30,6 +32,8 @@ function draw() {
   shootyShoot();
   updateBullet();
   theEnemy1Behaviour();
+  drawHealthBar();
+  gameOver();
 }
 
 function mainCharacter() {
@@ -53,13 +57,17 @@ function theEnemy1() {
   }
   
   enemy1 = new Sprite(x, y, 20);
+  enemy1.color = "black";
 }
-
 
 function theEnemy1Behaviour() {
   enemy1.moveTo(player, ENEMY1_SPEED);
+  if (enemy1.collides(player)) {
+    playerHealth -= 10;
+    enemy1.remove();
+    theEnemy1();
+  }
 }
-
 
 function theGunCharacteristics() {
   mainCharacterGun = new Sprite(width/2, height/2, 20, 10);
@@ -125,6 +133,7 @@ function updateBullet() {
     bullet.y += bullet.vel.y;
 
     if (bullet.collides(enemy1)) {
+      bullet.remove();
       bullets.splice(i, 1);
       i--;
 
@@ -135,3 +144,16 @@ function updateBullet() {
     }
   }
 }
+
+function drawHealthBar() {
+  fill(255, 0, 0);
+  rect(20, 40, playerHealth, 10); 
+  fill(0, 255, 0);
+  rect(20, 40, playerHealth, 10, 5);
+}
+
+function gameOver() {
+  if (playerHealth <= 0) {
+    noLoop();
+  }
+} 
