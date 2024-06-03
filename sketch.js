@@ -71,18 +71,26 @@ function theEnemy1Behaviour() {
 
 function theGunCharacteristics() {
   mainCharacterGun = new Sprite(width/2, height/2, 20, 10);
+  mainCharacterGun.color = "purple";
   mainCharacterGun.mass = 0;
 }
 
 function playerMovement() {
   if (canJump) {
-    if (kb.presses("w") && player.colliding(platform)) {
-      player.vel.y = -4;
-      canJump = false;
+    if (kb.presses("w")) {
+      for (let i = 0; i < platforms.length; i++) {
+        if (player.colliding(platforms[i])) {
+          player.vel.y = -4;
+          canJump = false;
+          break;
+        }
+      }
     }
   }
-  if (player.collides(platform)) {
-    canJump = true;
+  for (let i = 0; i < platforms.length; i++) {
+    if (player.collides(platforms[i])) {
+      canJump = true;
+    }
   }
   if (kb.pressing("d")) {
     player.vel.x = 5;
@@ -95,10 +103,29 @@ function playerMovement() {
   }
 }
 
+
 function thePlatforms() {
-  platform = new Sprite(width/2, height/2 + 50, 100, 20, "static");
-  platform.color = "red";
+let platform1 = new Sprite(20, height/2, width, 20, "static");
+platform1.color = "red";
+platforms.push(platform1);
+
+let platform2 = new Sprite(90 , height/2 + 30, 200, 20, "static");
+platform2.color = "red";
+platforms.push(platform2);
+
+// let platform3 = new Sprite(width - 200, height - 250, 150, 20, "static");
+// platform3.color = "red";
+// platforms.push(platform3);
+
+// let platform4 = new Sprite(width/2 - 50, height - 350, 100, 20, "static");
+// platform4.color = "red";
+// platforms.push(platform4);
+
+// let platform5 = new Sprite(0, height - 450, width, 20, "static");
+// platform5.color = "red";
+// platforms.push(platform5);
 }
+
 
 function theCamera() {
   // camera.x = mouseX;
