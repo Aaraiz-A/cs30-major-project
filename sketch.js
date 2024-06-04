@@ -15,7 +15,7 @@ let playerHealth = 100;
 
 
 function setup() {
-  new Canvas(600, 600);
+  new Canvas(windowWidth, windowHeight);
   world.gravity.y = WORLD_GRAVITY;
 
   mainCharacter();
@@ -53,7 +53,6 @@ function theEnemy1() {
   while (distance < 100) {
     x = random(0, width);
     y = random(0, height/2);
-    distance = dist(x, y, player.x, player.y);
   }
   
   enemy1 = new Sprite(x, y, 20);
