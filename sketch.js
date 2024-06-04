@@ -37,7 +37,7 @@ function draw() {
 }
 
 function mainCharacter() {
-  player = new Sprite(width/2, height/2, 20);
+  player = new Sprite(20, height/2, 20);
   player.color = "green";
 }
 
@@ -105,25 +105,29 @@ function playerMovement() {
 
 
 function thePlatforms() {
-let platform1 = new Sprite(20, height/2, width, 20, "static");
+let platform1 = new Sprite(20, height/2 + 50, 100, 20, "static");
 platform1.color = "red";
 platforms.push(platform1);
 
-let platform2 = new Sprite(90 , height/2 + 30, 200, 20, "static");
+let platform2 = new Sprite(300, height/2, 200, 20, "static");
 platform2.color = "red";
 platforms.push(platform2);
 
-// let platform3 = new Sprite(width - 200, height - 250, 150, 20, "static");
-// platform3.color = "red";
-// platforms.push(platform3);
+let platform3 = new Sprite(500, height/2 + 50, 150, 20, "static");
+platform3.color = "red";
+platforms.push(platform3);
 
-// let platform4 = new Sprite(width/2 - 50, height - 350, 100, 20, "static");
-// platform4.color = "red";
-// platforms.push(platform4);
+let platform4 = new Sprite(900, height/2 + 100, 100, 20, "static");
+platform4.color = "red";
+platforms.push(platform4);
 
-// let platform5 = new Sprite(0, height - 450, width, 20, "static");
-// platform5.color = "red";
-// platforms.push(platform5);
+let platform5 = new Sprite(1000, height/2, 20, 100, "static");
+platform5.color = "red";
+platforms.push(platform5);
+
+let platform6 = new Sprite(1100, height/2, 100, 20, "static");
+platform6.color = "red";
+platforms.push(platform6);
 }
 
 
@@ -174,9 +178,9 @@ function updateBullet() {
 
 function drawHealthBar() {
   fill(255, 0, 0);
-  rect(20, 40, playerHealth, 10); 
+  rect(20, 40, 100, 10);
   fill(0, 255, 0);
-  rect(20, 40, playerHealth, 10, 5);
+  rect(20, 40, playerHealth, 10);
 }
 
 function gameOver() {
