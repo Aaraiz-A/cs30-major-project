@@ -12,28 +12,38 @@ let bullets = [];
 let platforms = [];
 let dist1;
 let playerHealth = 100;
+let state = "game on";
 
 
 function setup() {
   new Canvas(windowWidth, windowHeight);
   world.gravity.y = WORLD_GRAVITY;
 
-  mainCharacter();
-  theEnemy1();
-  theGunCharacteristics();
-  thePlatforms();
+  if (state === "game on") {
+    mainCharacter();
+    theEnemy1();
+    theGunCharacteristics();
+    thePlatforms();
+  }
 }
 
 function draw() {
-  background(155);
-  theCamera();
-  playerMovement();
-  theGunBehaviour();
-  shootyShoot();
-  updateBullet();
-  theEnemy1Behaviour();
-  drawHealthBar();
-  gameOver();
+  if (state === "title screen") {
+    background(155);
+    titleScreenText();
+    // titleScreenButtonStart();
+  }
+  else if (state === "game on") {
+    background(155);
+    theCamera();
+    playerMovement();
+    theGunBehaviour();
+    shootyShoot();
+    updateBullet();
+    theEnemy1Behaviour();
+    drawHealthBar();
+    gameOver();
+  }
 }
 
 function mainCharacter() {
@@ -168,9 +178,6 @@ function updateBullet() {
       i--;
 
       enemy1.remove();
-      enemy1 = null;
-
-      theEnemy1();
     }
   }
 }
@@ -187,3 +194,27 @@ function gameOver() {
     noLoop();
   }
 } 
+
+function titleScreenText() {
+  textAlign(CENTER);
+  textFont("Trebuchet MS");
+  fill("black");
+  textSize(40);
+  text("The Game", width / 2, height / 2);
+}
+
+// function titleScreenButtonStart() {
+//   let startButton = new Clickable();
+//   startButton.text = "Start the Action!";
+//   startButton.textSize = 25;
+//   startButton.textColor = color(0);
+//   startButton.width = 200;
+//   startButton.height = 50;
+//   startButton.cornerRadius = 10;
+//   startButton.x = width/2 - startButton.width/2;
+//   startButton.y = height/2 + 50;
+//   startButton.onPress = function() {
+//     state = "game on";
+//   };
+//   startButton.draw();
+// }
