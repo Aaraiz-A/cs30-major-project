@@ -12,7 +12,7 @@ let bullets = [];
 let platforms = [];
 let dist1;
 let playerHealth = 100;
-let state = "game on";
+let state = "title screen";
 
 
 function setup() {
@@ -31,7 +31,7 @@ function draw() {
   if (state === "title screen") {
     background(155);
     titleScreenText();
-    // titleScreenButtonStart();
+    titleScreenButtonStart();
   }
   else if (state === "game on") {
     background(155);
@@ -111,7 +111,6 @@ function playerMovement() {
     player.vel.x = 0;
   }
 }
-
 
 function thePlatforms() {
 let platform1 = new Sprite(20, height/2 + 50, 100, 20, "static");
@@ -203,18 +202,18 @@ function titleScreenText() {
   text("The Game", width / 2, height / 2);
 }
 
-// function titleScreenButtonStart() {
-//   let startButton = new Clickable();
-//   startButton.text = "Start the Action!";
-//   startButton.textSize = 25;
-//   startButton.textColor = color(0);
-//   startButton.width = 200;
-//   startButton.height = 50;
-//   startButton.cornerRadius = 10;
-//   startButton.x = width/2 - startButton.width/2;
-//   startButton.y = height/2 + 50;
-//   startButton.onPress = function() {
-//     state = "game on";
-//   };
-//   startButton.draw();
-// }
+function titleScreenButtonStart() {
+  let startButton = new Clickable();
+  startButton.text = "Start the Action!";
+  startButton.textSize = 25;
+  startButton.textColor = color(0);
+  startButton.width = 200;
+  startButton.height = 50;
+  startButton.cornerRadius = 10;
+  startButton.x = width/2 - startButton.width/2;
+  startButton.y = height/2 + 50;
+  startButton.onPress = function() {
+    state = "game on";
+  };
+  startButton.draw();
+}
