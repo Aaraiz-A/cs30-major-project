@@ -13,7 +13,7 @@ A 2d platformer where the main character has a gun. He has to jump on platforms 
 - A physics engine (using p5play) (done)
 - The main character's weapon (done)
 - an enemy type (done)
-- at least 2 levels
+- A level (done)
 - Death (done)
 - Camera is centered around the main character (done)
 - main character has lives/health bar (done)

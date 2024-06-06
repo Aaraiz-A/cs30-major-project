@@ -18,13 +18,6 @@ let state = "title screen";
 function setup() {
   new Canvas(windowWidth, windowHeight);
   world.gravity.y = WORLD_GRAVITY;
-
-  if (state === "game on") {
-    mainCharacter();
-    theEnemy1();
-    theGunCharacteristics();
-    thePlatforms();
-  }
 }
 
 function draw() {
@@ -32,6 +25,13 @@ function draw() {
     background(155);
     titleScreenText();
     titleScreenButtonStart();
+  }
+  else if (state === "set up") {
+    mainCharacter();
+    theEnemy1();
+    theGunCharacteristics();
+    thePlatforms();
+    state = "game on";
   }
   else if (state === "game on") {
     background(155);
@@ -109,6 +109,11 @@ function playerMovement() {
   }
   else {
     player.vel.x = 0;
+  }
+  if (player.y > height) {
+    player.x = 20; 
+    player.y = height/2; 
+    player.vel.y = 0;
   }
 }
 
@@ -205,15 +210,19 @@ function titleScreenText() {
 function titleScreenButtonStart() {
   let startButton = new Clickable();
   startButton.text = "Start the Action!";
+  textAlign(CENTER);
   startButton.textSize = 25;
   startButton.textColor = color(0);
   startButton.width = 200;
-  startButton.height = 50;
+  startButton.height = 45;
   startButton.cornerRadius = 10;
   startButton.x = width/2 - startButton.width/2;
   startButton.y = height/2 + 50;
+  startButton.onHover = function () {
+    startButton.color = "red";
+  }
   startButton.onPress = function() {
-    state = "game on";
+    state = "set up";
   };
   startButton.draw();
 }
