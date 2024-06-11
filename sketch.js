@@ -150,11 +150,39 @@ function thePlatforms() {
   let platform6 = new Sprite(1100, height/2, 100, 20, "static");
   platform6.color = "red";
   platforms.push(platform6);
+
+  //second checkpoint
+  let platform7 = new Sprite(1180, height/2, 40, 20, "static");
+  platform7.color = "red";
+  platforms.push(platform7);
+
+  let platform8 = new Sprite(1450, height/2 - 100, 20, 200, "static");
+  platform8.color = "red";
+  platforms.push(platform8);
+
+  let platform9 = new Sprite(1650, height/2 - 300, 20, 200, "static");
+  platform9.color = "red";
+  platforms.push(platform9);
+
+  let platform10 = new Sprite(1850, height/2 - 100, 20, 200, "static");
+  platform10.color = "red";
+  platforms.push(platform10);
+
+  let platform11 = new Sprite(2050, height/2 - 300, 20, 200, "static");
+  platform11.color = "red";
+  platforms.push(platform11);
+
+  let platform12 = new Sprite(2450, height/2, 300, 10, "static");
+  platform12.color = "red";
+  platforms.push(platform12);
 }
 
 function theCheckpoints() {
   let checkpoint1 = new Checkpoint(1170, height/2, 20, 20, "static");
   checkpoints.push(checkpoint1);
+
+  let checkpoint2 = new Checkpoint(2550, height/2, 20, 10, "static");
+  checkpoints.push(checkpoint2);
 }
 
 function theCamera() {
