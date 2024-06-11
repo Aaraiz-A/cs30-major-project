@@ -49,7 +49,7 @@ function draw() {
   }
   else if (state === "game over") {
     background(155);
-    text("game over", width/2, height/2);
+    drawGameOverScreen();
   }
 }
 
@@ -239,7 +239,6 @@ function titleScreenButtonStart() {
 
 function drawCheckpoints() {
   for (let i = 0; i < checkpoints.length; i++) {
-    checkpoints[i].draw();
     checkpoints[i].checkCollision();
   }
 }
@@ -261,4 +260,50 @@ function Checkpoint(x, y, width, height, state) {
       playerSpawnPoint = createVector(this.sprite.x, this.sprite.y - 50);
     }
   }
+}
+
+function drawGameOverScreen() {
+  player.visible = false;
+  enemy1.visible = false;
+  mainCharacterGun.visible = false;
+  for (let i = 0; i < platforms.length; i++) {
+    platforms[i].visible = false;
+  }
+  for (let i = 0; i < checkpoints.length; i++) {
+    checkpoints[i].visible = false;
+  }
+
+  textAlign(CENTER);
+  text("Game Over", width/2, height/2);
+
+  let tryAgainButton = new Clickable();
+  tryAgainButton.text = "Try Again?";
+  tryAgainButton.textSize = 25;
+  tryAgainButton.textColor = color(0);
+  tryAgainButton.width = 200;
+  tryAgainButton.height = 45;
+  tryAgainButton.cornerRadius = 10;
+  tryAgainButton.x = width/2 - tryAgainButton.width/2;
+  tryAgainButton.y = height/2 + 50;
+  tryAgainButton.onPress = function() {
+    state = "set up";
+    playerHealth = 100;
+    player.x = playerSpawnPoint.x;
+    player.y = playerSpawnPoint.y;
+  };
+  tryAgainButton.draw();
+
+  let mainMenuButton = new Clickable();
+  mainMenuButton.text = "Main Menu Because I Am A Weakling";
+  mainMenuButton.textSize = 25;
+  mainMenuButton.textColor = color(0);
+  mainMenuButton.width = 500;
+  mainMenuButton.height = 45;
+  mainMenuButton.cornerRadius = 10;
+  mainMenuButton.x = width/2 - mainMenuButton.width/2;
+  mainMenuButton.y = height/2 + 100;
+  mainMenuButton.onPress = function() {
+    state = "title screen";
+  };
+  mainMenuButton.draw();
 }
