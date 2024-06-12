@@ -15,6 +15,7 @@ let dist1;
 let playerHealth = 100;
 let playerSpawnPoint;
 let state = "title screen";
+let lastRotationTime = 0;
 
 function setup() {
   new Canvas(windowWidth, windowHeight);
@@ -175,6 +176,25 @@ function thePlatforms() {
   let platform12 = new Sprite(2450, height/2, 300, 10, "static");
   platform12.color = "red";
   platforms.push(platform12);
+
+  //third checkpoint
+  let platform13 = new Sprite(2850, height/2, 200, 25, "k");
+  platform13.color = "red";
+  platform13.rotationSpeed = 1;
+  platforms.push(platform13);
+
+  let platform14 = new Sprite(3250, height/2, 200, 15, "k");
+  platform14.color = "red";
+  platform14.rotationSpeed = 3;
+  platforms.push(platform14);
+
+  let platform15 = new Sprite(3650, height/2, 200, 15, "k");
+  platform15.color = "red";
+  if (millis() - lastRotationTime >= 3000) {
+    lastRotationTime = millis();
+    platform15.rotation = 180; 
+  }
+  platforms.push(platform15);
 }
 
 function theCheckpoints() {
@@ -286,6 +306,7 @@ function Checkpoint(x, y, width, height, state) {
       this.sprite.color = "green";
       this.touched = true;
       playerSpawnPoint = createVector(this.sprite.x, this.sprite.y - 50);
+      playerHealth = 100;
     }
   }
 }
