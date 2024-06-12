@@ -80,7 +80,7 @@ function theEnemy1() {
 function theEnemy1Behaviour() {
   enemy1.moveTo(player, ENEMY1_SPEED);
   if (enemy1.collides(player)) {
-    playerHealth -= 10;
+    playerHealth -= 50;
     enemy1.remove();
     theEnemy1();
   }
@@ -298,7 +298,7 @@ function drawGameOverScreen() {
     platforms[i].visible = false;
   }
   for (let i = 0; i < checkpoints.length; i++) {
-    checkpoints[i].visible = false;
+    checkpoints[i].sprite.visible = false;
   }
 
   textAlign(CENTER);
@@ -318,6 +318,11 @@ function drawGameOverScreen() {
     playerHealth = 100;
     player.x = playerSpawnPoint.x;
     player.y = playerSpawnPoint.y;
+    for (let i = 0; i < checkpoints.length; i++) {
+      checkpoints[i].sprite.visible = true;
+      checkpoints[i].sprite.color = "yellow";
+      checkpoints[i].touched = false;
+    }
   };
   tryAgainButton.draw();
 
