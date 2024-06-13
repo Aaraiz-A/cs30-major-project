@@ -15,7 +15,7 @@ let dist1;
 let playerHealth = 100;
 let playerSpawnPoint;
 let state = "title screen";
-let lastRotationTime = 0;
+
 
 function setup() {
   new Canvas(windowWidth, windowHeight);
@@ -34,6 +34,7 @@ function draw() {
     theGunCharacteristics();
     thePlatforms();
     theCheckpoints();
+    tutorialText();
     state = "game on";
   }
   else if (state === "game on") {
@@ -45,6 +46,7 @@ function draw() {
     shootyShoot();
     updateBullet();
     theEnemy1Behaviour();
+    platform17Behaviour();
     drawHealthBar();
     gameOver();
   }
@@ -95,7 +97,7 @@ function theGunCharacteristics() {
 
 function playerMovement() {
   if (canJump) {
-    if (kb.presses("w")) {
+    if (kb.presses("w") || kb.presses(" ")) {
       for (let i = 0; i < platforms.length; i++) {
         if (player.colliding(platforms[i])) {
           player.vel.y = -4;
@@ -108,6 +110,9 @@ function playerMovement() {
   for (let i = 0; i < platforms.length; i++) {
     if (player.collides(platforms[i])) {
       canJump = true;
+      if (i === 16) { 
+        platforms[i].vel.y = -2; 
+      }
     }
   }
   if (kb.pressing("d")) {
@@ -148,7 +153,7 @@ function thePlatforms() {
   platform5.color = "red";
   platforms.push(platform5);
 
-  let platform6 = new Sprite(1100, height/2, 100, 20, "static");
+  let platform6 = new Sprite(1100, height/2, 120, 20, "static");
   platform6.color = "red";
   platforms.push(platform6);
 
@@ -178,31 +183,47 @@ function thePlatforms() {
   platforms.push(platform12);
 
   //third checkpoint
-  let platform13 = new Sprite(2850, height/2, 200, 25, "k");
-  platform13.color = "red";
+  let platform13 = new Sprite(2850, height/2, 200, 15, "k");
+  platform13.color = "blue";
   platform13.rotationSpeed = 1;
   platforms.push(platform13);
 
   let platform14 = new Sprite(3250, height/2, 200, 15, "k");
-  platform14.color = "red";
+  platform14.color = "blue";
   platform14.rotationSpeed = 3;
   platforms.push(platform14);
 
-  let platform15 = new Sprite(3650, height/2, 200, 15, "k");
-  platform15.color = "red";
-  if (millis() - lastRotationTime >= 3000) {
-    lastRotationTime = millis();
-    platform15.rotation = 180; 
-  }
+  let platform15 = new Sprite(3650, height/2, 100, 15, "k");
+  platform15.color = "blue";
+  platform15.rotationSpeed = 5;
   platforms.push(platform15);
+
+  let platform16 = new Sprite(4000, height/2, 250, 15, "k");
+  platform16.color = "blue";
+  platform16.rotationSpeed = 3;
+  platform16.offset.x = 125;
+  platforms.push(platform16);
+
+  let platform17 = new Sprite(4400, height/2, 200, 15, "k");
+  platform17.color = "pink";
+  platforms.push(platform17); 
+
+  let platform18 = new Sprite(4450, height/2 - 500, 100, 20, "static");
+  platform18.color = "red";
+  platforms.push(platform18); 
+
+  //fourth checkpoint
 }
 
 function theCheckpoints() {
-  let checkpoint1 = new Checkpoint(1170, height/2, 20, 20, "static");
+  let checkpoint1 = new Checkpoint(1150, height/2, 20, 20, "static");
   checkpoints.push(checkpoint1);
 
   let checkpoint2 = new Checkpoint(2550, height/2, 20, 10, "static");
   checkpoints.push(checkpoint2);
+
+  let checkpoint3 = new Checkpoint(4500, height/2 - 500, 20, 20, "static")
+  checkpoints.push(checkpoint3);
 }
 
 function theCamera() {
@@ -360,4 +381,20 @@ function drawGameOverScreen() {
     state = "title screen";
   };
   mainMenuButton.draw();
+}
+
+function platform17Behaviour() {
+  for (let i = 0; i < platforms.length; i++) {
+    if (i === 16) { // platform 17
+      if (platforms[i].y < height/2 - 500) {
+        platforms[i].vel.y = 0; 
+      }
+    }
+  }
+}
+
+function tutorialText() {
+  fill("black");
+  textSize(15);
+  text("Hold down 'A' and 'D' to move left and right!", 20, height/2);
 }
