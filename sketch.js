@@ -34,7 +34,6 @@ function draw() {
     theGunCharacteristics();
     thePlatforms();
     theCheckpoints();
-    tutorialText();
     state = "game on";
   }
   else if (state === "game on") {
@@ -393,8 +392,8 @@ function platform17Behaviour() {
   }
 }
 
-function tutorialText() {
-  fill("black");
-  textSize(15);
-  text("Hold down 'A' and 'D' to move left and right!", 20, height/2);
-}
+// function tutorialText() {
+//   fill("black");
+//   textSize(15);
+//   text("Hold down 'A' and 'D' to move left and right!", 20, height/2);
+// }
