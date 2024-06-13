@@ -16,7 +16,6 @@ let playerHealth = 100;
 let playerSpawnPoint;
 let state = "title screen";
 
-
 function setup() {
   new Canvas(windowWidth, windowHeight);
   world.gravity.y = WORLD_GRAVITY;
