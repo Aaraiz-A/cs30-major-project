@@ -15,6 +15,11 @@ let dist1;
 let playerHealth = 100;
 let playerSpawnPoint;
 let state = "title screen";
+let titleMusic;
+
+function preload() {
+  titleMusic = loadSound('assets/Music/Juhani Junkala [Retro Game Music Pack] Title Screen.wav');
+}
 
 function setup() {
   new Canvas(windowWidth, windowHeight);
@@ -27,6 +32,7 @@ function draw() {
     titleScreenText();
     titleScreenButtonStart();
     titleScreenButtonHowToPlay();
+    titleMusic.loop();
   }
   else if (state === "how to play") {
     drawHowToPlay();
@@ -98,20 +104,20 @@ function theGunCharacteristics() {
 }
 
 function playerMovement() {
-  if (canJump) {
-    if (kb.presses("w") || kb.presses(" ")) {
-      for (let i = 0; i < platforms.length; i++) {
-        if (player.colliding(platforms[i])) {
-          player.vel.y = -4;
-          canJump = false;
-          break;
-        }
-      }
-    }
-  }
-  // if (kb.presses("w")) {
-  //   player.vel.y = -4;
+  // if (canJump) {
+  //   if (kb.presses("w") || kb.presses(" ")) {
+  //     for (let i = 0; i < platforms.length; i++) {
+  //       if (player.colliding(platforms[i])) {
+  //         player.vel.y = -4;
+  //         canJump = false;
+  //         break;
+  //       }
+  //     }
+  //   }
   // }
+  if (kb.presses("w")) {
+    player.vel.y = -4;
+  }
   for (let i = 0; i < platforms.length; i++) {
     if (player.collides(platforms[i])) {
       canJump = true;
@@ -247,6 +253,14 @@ function thePlatforms() {
   platforms.push(platform26);
 
   //fifth checkpoint
+  let platform272 = new Sprite(6650, height/2 - 250, 20, 20, "k");
+  platform272.color = "red";
+  platforms.push(platform272);
+  
+  let platform27 = new Sprite(6450, height/2 - 250, 400, 10);
+  platform27.color = "red";
+  platforms.push(platform27);
+
 }
 
 function theCheckpoints() {
