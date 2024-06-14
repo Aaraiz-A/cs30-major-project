@@ -1,8 +1,10 @@
 // Aaraiz Afridi
 // CS30 Major Project
+//MUSIC 
 
 let player;
 let enemy1;
+let levelMusic;
 let platform;
 let mainCharacterGun;
 const WORLD_GRAVITY = 9.8;
@@ -19,6 +21,7 @@ let titleMusic;
 
 function preload() {
   titleMusic = loadSound('assets/Music/Juhani Junkala [Retro Game Music Pack] Title Screen.wav');
+  levelMusic = loadSound('assets/Music/Juhani Junkala [Retro Game Music Pack] Level 2.wav');
 }
 
 function setup() {
@@ -32,7 +35,6 @@ function draw() {
     titleScreenText();
     titleScreenButtonStart();
     titleScreenButtonHowToPlay();
-    titleMusic.loop();
   }
   else if (state === "how to play") {
     drawHowToPlay();
@@ -43,6 +45,7 @@ function draw() {
     theGunCharacteristics();
     thePlatforms();
     theCheckpoints();
+    levelMusic.loop();
     state = "game on";
   }
   else if (state === "game on") {
@@ -61,6 +64,12 @@ function draw() {
   else if (state === "game over") {
     background(155);
     drawGameOverScreen();
+  }
+}
+
+function mousePressed() {
+  if (!titleMusic.isLooping()) {
+    titleMusic.loop();
   }
 }
 
