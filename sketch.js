@@ -26,6 +26,10 @@ function draw() {
     background(155);
     titleScreenText();
     titleScreenButtonStart();
+    titleScreenButtonHowToPlay();
+  }
+  else if (state === "how to play") {
+    drawHowToPlay();
   }
   else if (state === "set up") {
     mainCharacter();
@@ -36,7 +40,7 @@ function draw() {
     state = "game on";
   }
   else if (state === "game on") {
-    background(155);
+    background("#87CEEB");
     theCamera();
     drawCheckpoints();
     playerMovement();
@@ -105,6 +109,9 @@ function playerMovement() {
       }
     }
   }
+  // if (kb.presses("w")) {
+  //   player.vel.y = -4;
+  // }
   for (let i = 0; i < platforms.length; i++) {
     if (player.collides(platforms[i])) {
       canJump = true;
@@ -206,11 +213,40 @@ function thePlatforms() {
   platform17.color = "pink";
   platforms.push(platform17); 
 
-  let platform18 = new Sprite(4450, height/2 - 500, 100, 20, "static");
+  let platform18 = new Sprite(4600, height/2 - 500, 100, 20, "static");
   platform18.color = "red";
   platforms.push(platform18); 
 
   //fourth checkpoint
+  let platform19 = new Sprite(4800, height/2 - 530, 20, 20, "static");
+  platform19.color = "red";
+  platforms.push(platform19);
+
+  let platform21 = new Sprite(5000, height/2 - 420, 20, 20, "static");
+  platform21.color = "red";
+  platforms.push(platform21);
+
+  let platform22 = new Sprite(5170, height/2 - 490, 20, 20, "static");
+  platform22.color = "red";
+  platforms.push(platform22);
+
+  let platform23 = new Sprite(5390, height/2 - 400, 20, 20, "static");
+  platform23.color = "red";
+  platforms.push(platform23);
+
+  let platform24 = new Sprite(5530, height/2 - 450, 20, 20, "static");
+  platform24.color = "red";
+  platforms.push(platform24);
+
+  let platform25 = new Sprite(5690, height/2 - 350, 20, 20, "static");
+  platform25.color = "red";
+  platforms.push(platform25);
+
+  let platform26 = new Sprite(6100, height/2 - 250, 200, 20, "static");
+  platform26.color = "red";
+  platforms.push(platform26);
+
+  //fifth checkpoint
 }
 
 function theCheckpoints() {
@@ -220,8 +256,11 @@ function theCheckpoints() {
   let checkpoint2 = new Checkpoint(2550, height/2, 20, 10, "static");
   checkpoints.push(checkpoint2);
 
-  let checkpoint3 = new Checkpoint(4500, height/2 - 500, 20, 20, "static")
+  let checkpoint3 = new Checkpoint(4600, height/2 - 500, 20, 20, "static")
   checkpoints.push(checkpoint3);
+
+  let checkpoint4 = new Checkpoint(6150, height/2 - 250, 20, 20, "static")
+  checkpoints.push(checkpoint4);
 }
 
 function theCamera() {
@@ -295,13 +334,64 @@ function titleScreenButtonStart() {
   startButton.cornerRadius = 10;
   startButton.x = width/2 - startButton.width/2;
   startButton.y = height/2 + 50;
-  startButton.onHover = function () {
-    startButton.color = "red";
-  }
   startButton.onPress = function() {
     state = "set up";
   };
   startButton.draw();
+}
+
+function titleScreenButtonHowToPlay() {
+  let howToPlayButton = new Clickable();
+  howToPlayButton.text = "How to Play";
+  textAlign(CENTER);
+  howToPlayButton.textSize = 25;
+  howToPlayButton.textColor = color(0);
+  howToPlayButton.width = 200;
+  howToPlayButton.height = 45;
+  howToPlayButton.cornerRadius = 10;
+  howToPlayButton.x = width/2 - howToPlayButton.width/2;
+  howToPlayButton.y = height/2 + 120;
+  howToPlayButton.onPress = function() {
+    state = "how to play";
+  };
+  howToPlayButton.draw();
+}
+
+function drawHowToPlay() {
+  background(155);
+  fill(0);
+  textSize(32);
+  text("How to Play", width/2, 50);
+  
+  fill(0);
+  textSize(20);
+  textAlign(CENTER);
+  text("Hold down 'A' and 'D' to move left and right. Press 'W' or 'SPACE' to Jump. Press your left mouse button to shoot.", width/2, 100);
+  text("In order to wall run, spam the jump button while running against the wall.", width/2, 160);
+
+  fill("yellow");
+  rect(width/2 - 50, 350, 20, 20);
+  fill("green");
+  rect(width/2 + 50, 350, 20, 20);
+  
+  fill("black");
+  textAlign(CENTER);
+  text("This yellow square is a check point. If you touch it, it will turn green, which means that will be your new spawn point if you fall.", width/2, 220);
+  text(" If an enemy kills you, you will have to restart the level.", width/2, 270)
+  
+  let backButton = new Clickable();
+  backButton.text = "Back to Main Menu";
+  backButton.textSize = 25;
+  backButton.textColor = color(0);
+  backButton.width = 300;
+  backButton.height = 45;
+  backButton.cornerRadius = 10;
+  backButton.x = width/2 - backButton.width/2;
+  backButton.y = height/2 + 200;
+  backButton.onPress = function() {
+    state = "title screen";
+  };
+  backButton.draw();
 }
 
 function drawCheckpoints() {
@@ -390,4 +480,3 @@ function platform17Behaviour() {
     }
   }
 }
-
