@@ -16,7 +16,7 @@ let checkpoints = [];
 let dist1;
 let playerHealth = 100;
 let playerSpawnPoint;
-let state = "title screen";
+let state = "beginner";
 let titleMusic;
 
 function preload() {
@@ -30,7 +30,11 @@ function setup() {
 }
 
 function draw() {
-  if (state === "title screen") {
+  if (state === "beginner") {
+    background("black");
+    beginnerScreen();
+  }
+  else if (state === "title screen") {
     background(155);
     titleScreenText();
     titleScreenButtonStart();
@@ -40,6 +44,7 @@ function draw() {
     drawHowToPlay();
   }
   else if (state === "set up") {
+    titleMusic.stop();
     mainCharacter();
     theEnemy1();
     theGunCharacteristics();
@@ -68,7 +73,8 @@ function draw() {
 }
 
 function mousePressed() {
-  if (!titleMusic.isLooping()) {
+  if (state === "beginner") {
+    state = "title screen";
     titleMusic.loop();
   }
 }
@@ -262,14 +268,54 @@ function thePlatforms() {
   platforms.push(platform26);
 
   //fifth checkpoint
-  let platform272 = new Sprite(6650, height/2 - 250, 20, 20, "k");
-  platform272.color = "red";
-  platforms.push(platform272);
-  
-  let platform27 = new Sprite(6450, height/2 - 250, 400, 10);
-  platform27.color = "red";
+	let platform27Joint = new Sprite(6500, height/2 - 400, 10, 50, 'k');
+	let platform27 = new Sprite(6500, height/2 - 250, 175, 15);
+  platform27.color = "lime";
+  platform27Joint.color = "grey";
   platforms.push(platform27);
+	let joint = new DistanceJoint(platform27Joint, platform27);
+	joint.offsetA.y = 25;
+	joint.springiness = 20; 
 
+  let platform28Joint = new Sprite(6850, height/2 - 450, 10, 50, 'k');
+	let platform28 = new Sprite(6850, height/2 - 300, 175, 15);
+  platform28.color = "lime";
+  platform28Joint.color = "grey";
+  platforms.push(platform28);
+	let joint2 = new DistanceJoint(platform28Joint, platform28);
+	joint2.offsetA.y = 25;
+	joint2.springiness = 20; 
+
+  let platform29Joint = new Sprite(7200, height/2 - 450, 10, 50, 'k');
+	let platform29 = new Sprite(7200, height/2 - 300, 175, 15);
+  platform29.color = "lime";
+  platform29Joint.color = "grey";
+  platforms.push(platform29);
+	let joint3 = new DistanceJoint(platform29Joint, platform29);
+	joint3.offsetA.y = 25;
+	joint3.springiness = 20; 
+
+  let platform30Joint = new Sprite(7600, height/2 - 550, 10, 50, 'k');
+	let platform30 = new Sprite(7600, height/2 - 400, 175, 15);
+  platform30.color = "lime";
+  platform30Joint.color = "grey";
+  platforms.push(platform30);
+	let joint4 = new DistanceJoint(platform30Joint, platform30);
+	joint4.offsetA.y = 25;
+	joint4.springiness = 20; 
+
+  let platform31Joint = new Sprite(7950, height/2 - 400, 10, 50, 'k');
+	let platform31 = new Sprite(7950, height/2 - 250, 175, 15);
+  platform31.color = "lime";
+  platform31Joint.color = "grey";
+  platforms.push(platform31Joint);
+	let joint5 = new DistanceJoint(platform31Joint, platform31);
+	joint5.offsetA.y = 25;
+	joint5.springiness = 20; 
+
+  let platform32 = new Sprite(8350, height/2 - 150, 200, 20, "static");
+  platform32.color = "red";
+  platforms.push(platform32);
 }
 
 function theCheckpoints() {
@@ -284,6 +330,9 @@ function theCheckpoints() {
 
   let checkpoint4 = new Checkpoint(6150, height/2 - 250, 20, 20, "static")
   checkpoints.push(checkpoint4);
+
+  let checkpoint5 = new Checkpoint(8375, height/2 - 150, 20, 20, "static");
+  checkpoints.push(checkpoint5);
 }
 
 function theCamera() {
@@ -502,4 +551,12 @@ function platform17Behaviour() {
       }
     }
   }
+}
+
+function beginnerScreen() {
+  fill("white");
+  textFont("Trebuchet MS");
+  textSize(40);
+  textAlign(CENTER);
+  text("Click Anywhere To Start", width/2, height/2 + 20);
 }
