@@ -1,7 +1,11 @@
 // Aaraiz Afridi
 // CS30 Major Project
-//MUSIC 
+// Extra For Experts (WOW FACTOR)
+// Learned and Implemented P5play, Learned and Implemented Clickable, used various new functions such as cos, sign, createvector, and more
+// I stepped out of my comfort zone a lot throughout this project and experimented with stuff that I usually would not experiment with
+// I worked very hard on this project and used a lot of new concepts, although they might not count as extra for experts
 
+//define variables
 let player;
 let enemy1;
 let levelMusic;
@@ -22,6 +26,7 @@ let state = "beginner";
 let titleMusic;
 let winPlatform;
 
+//preloading some stuff
 function preload() {
   titleMusic = loadSound('assets/Music/Juhani Junkala [Retro Game Music Pack] Title Screen.wav');
   levelMusic = loadSound('assets/Music/Juhani Junkala [Retro Game Music Pack] Level 2.wav');
@@ -29,26 +34,28 @@ function preload() {
   deathMusic = loadSound('assets/Music/Lament_for_a_Warriors_Soul.mp3');
 }
 
+//setting up some stuff
 function setup() {
   new Canvas(windowWidth, windowHeight);
   world.gravity.y = WORLD_GRAVITY;
 }
 
+// the draw function, where everything runs itself
 function draw() {
-  if (state === "beginner") {
+  if (state === "beginner") { //beginning screen, like the black one
     background("black");
     beginnerScreen();
   }
-  else if (state === "title screen") {
-    background(155);
+  else if (state === "title screen") { // the actual title screen itself
+    background("pink");
     titleScreenText();
     titleScreenButtonStart();
     titleScreenButtonHowToPlay();
   }
-  else if (state === "how to play") {
+  else if (state === "how to play") { // the how to play screen
     drawHowToPlay();
   }
-  else if (state === "set up") {
+  else if (state === "set up") { // just setting up the level before actually running it
     titleMusic.stop();
     mainCharacter();
     theEnemy1();
@@ -58,7 +65,7 @@ function draw() {
     levelMusic.loop();
     state = "game on";
   }
-  else if (state === "game on") {
+  else if (state === "game on") { //running the level
     background("#87CEEB");
     theCamera();
     drawCheckpoints();
@@ -71,11 +78,11 @@ function draw() {
     drawHealthBar();
     gameOver();
   }
-  else if (state === "game over") {
+  else if (state === "game over") { // game over state
     background("red");
     drawGameOverScreen();
   }
-  else if (state === "win") {
+  else if (state === "win") { // when you win, this happens
     levelMusic.stop();
     winScreen();
     if (winMusic.isLooping() === false) {
@@ -84,6 +91,7 @@ function draw() {
   }
 }
 
+//using a mousePressed function for the beginning screen
 function mousePressed() {
   if (state === "beginner") {
     state = "title screen";
@@ -91,19 +99,21 @@ function mousePressed() {
   }
 }
 
+//defining the main character/player
 function mainCharacter() {
   player = new Sprite(20, height/2, 20);
   player.color = "green";
   playerSpawnPoint = createVector(20, height/2);
 }
 
+//defining the enemy
 function theEnemy1() {
   let x
   let y;
   let distance;
 
-  x = random(1100, width);
-  y = random(0, height/2);
+  x = random(1100, 10700);
+  y = random(-500, height/2);
   distance = dist(x, y, player.x, player.y);
 
   while (distance < 100) {
@@ -115,6 +125,7 @@ function theEnemy1() {
   enemy1.color = "black";
 }
 
+//defining the enemy's behaviour
 function theEnemy1Behaviour() {
   enemy1.moveTo(player, ENEMY1_SPEED);
   if (enemy1.collides(player)) {
@@ -124,28 +135,27 @@ function theEnemy1Behaviour() {
   }
 }
 
+//giving the gun characteristics
 function theGunCharacteristics() {
   mainCharacterGun = new Sprite(width/2, height/2, 20, 10);
   mainCharacterGun.color = "purple";
   mainCharacterGun.mass = 0;
 }
 
+//programming how the main character can move
 function playerMovement() {
-  // if (canJump) {
-  //   if (kb.presses("w") || kb.presses(" ")) {
-  //     for (let i = 0; i < platforms.length; i++) {
-  //       if (player.colliding(platforms[i])) {
-  //         player.vel.y = -4;
-  //         canJump = false;
-  //         break;
-  //       }
-  //     }
-  //   }
-  // }
-  if (kb.presses("w")) {
-    player.vel.y = -4;
+  if (canJump) { // jumping stuff
+    if (kb.presses("w") || kb.presses(" ")) {
+      for (let i = 0; i < platforms.length; i++) {
+        if (player.colliding(platforms[i])) {
+          player.vel.y = -4;
+          canJump = false;
+          break;
+        }
+      }
+    }
   }
-  for (let i = 0; i < platforms.length; i++) {
+  for (let i = 0; i < platforms.length; i++) { //colliding with platform stuff
     if (player.collides(platforms[i])) {
       canJump = true;
       if (i === 16) { 
@@ -153,10 +163,10 @@ function playerMovement() {
       }
     }
   }
-  if (kb.pressing("d")) {
+  if (kb.pressing("d")) { //right
     player.vel.x = 5;
   }
-  else if (kb.pressing("a")) {
+  else if (kb.pressing("a")) { //left
     player.vel.x = -5;
   }
   else {
@@ -167,11 +177,12 @@ function playerMovement() {
     player.y = playerSpawnPoint.y;
     player.vel.y = 0;
   }
-  if (player.collides(winPlatform)) {
+  if (player.collides(winPlatform)) { //win platform collision
     state = "win";
   }
 }
 
+//Defining all the different platforms in the game
 function thePlatforms() {
   //first checkpoint
   let platform1 = new Sprite(20, height/2 + 50, 100, 20, "static");
@@ -370,6 +381,7 @@ function thePlatforms() {
   platforms.push(winPlatform);
 }
 
+//defining the checkpoints througout the game
 function theCheckpoints() {
   let checkpoint1 = new Checkpoint(1150, height/2, 20, 20, "static");
   checkpoints.push(checkpoint1);
@@ -387,17 +399,20 @@ function theCheckpoints() {
   checkpoints.push(checkpoint5);
 }
 
+//how the camera will be in the game
 function theCamera() {
   camera.x = player.x;
   camera.y = player.y;
 }
 
+//how the gun will move
 function theGunBehaviour() {
   mainCharacterGun.rotateTowards(mouse, 0.1, 0);
   mainCharacterGun.x = player.x;
   mainCharacterGun.y = player.y;
 }
 
+//how the gun shoots
 function shootyShoot() {
   if (mouse.presses()) {
     let angle = mainCharacterGun.rotation;
@@ -410,6 +425,7 @@ function shootyShoot() {
   }
 }
 
+//updating the guns bullets
 function updateBullet() {
   for (let i = 0; i < bullets.length; i++) {
     let bullet = bullets[i];
@@ -426,6 +442,7 @@ function updateBullet() {
   }
 }
 
+//drawing the health bar
 function drawHealthBar() {
   fill(255, 0, 0);
   rect(20, 40, 100, 10);
@@ -433,12 +450,14 @@ function drawHealthBar() {
   rect(20, 40, playerHealth, 10);
 }
 
+//setting up the game over state
 function gameOver() {
   if (playerHealth <= 0) {
     state = "game over";
   }
 }
 
+//title screen text
 function titleScreenText() {
   textAlign(CENTER);
   textFont("Trebuchet MS");
@@ -447,6 +466,7 @@ function titleScreenText() {
   text("CIRCLE ADVENTURES", width / 2, height / 2);
 }
 
+// the button that starts the game. I define it here
 function titleScreenButtonStart() {
   let startButton = new Clickable();
   startButton.text = "Start the Action!";
@@ -464,6 +484,7 @@ function titleScreenButtonStart() {
   startButton.draw();
 }
 
+//the button that shows the instructions. I define it here.
 function titleScreenButtonHowToPlay() {
   let howToPlayButton = new Clickable();
   howToPlayButton.text = "How to Play";
@@ -481,8 +502,9 @@ function titleScreenButtonHowToPlay() {
   howToPlayButton.draw();
 }
 
+// drawing the how to play page (what it will look like)
 function drawHowToPlay() {
-  background(155);
+  background("pink");
   fill(0);
   textSize(32);
   text("How to Play", width/2, 50);
@@ -519,17 +541,14 @@ function drawHowToPlay() {
   backButton.draw();
 }
 
+//drawing the checkpoints
 function drawCheckpoints() {
   for (let i = 0; i < checkpoints.length; i++) {
     checkpoints[i].checkCollision();
-    if (checkpoints[i].touched) {
-      for (let j = 0; j < enemiesPerCheckpoint[i]; j++) {
-        theEnemy1();
-      }
-    }
   }
 }
 
+//Defining the checkpoints (its behaviour)
 function Checkpoint(x, y, width, height, state) {
   this.sprite = new Sprite(x, y, width, height, state);
   this.sprite.color = "yellow";
@@ -539,17 +558,20 @@ function Checkpoint(x, y, width, height, state) {
     fill(this.sprite.color);
     rect(this.sprite.x, this.sprite.y, this.sprite.width, this.sprite.height);
   }
-
   this.checkCollision = function() {
     if (player.collides(this.sprite) && this.touched === false) {
       this.sprite.color = "green";
       this.touched = true;
       playerSpawnPoint = createVector(this.sprite.x, this.sprite.y - 50);
       playerHealth = 100;
+      for (let i = 0; i < 5; i++) {
+        theEnemy1();
+      }
     }
   }
 }
 
+//drawing the game over screen
 function drawGameOverScreen() {
   if (levelMusic.isLooping()) {
     levelMusic.stop();
@@ -571,6 +593,7 @@ function drawGameOverScreen() {
   textAlign(CENTER);
   text("You are DEAD!", width/2, height/2);
 
+   //buttons
   let tryAgainButton = new Clickable();
   tryAgainButton.text = "Try Again?";
   tryAgainButton.textSize = 25;
@@ -621,6 +644,7 @@ function platform17Behaviour() {
   }
 }
 
+//drawing the screen at the very beginning
 function beginnerScreen() {
   fill("white");
   textFont("Trebuchet MS");
@@ -629,6 +653,7 @@ function beginnerScreen() {
   text("Click Anywhere To Start", width/2, height/2 + 20);
 }
 
+//drawing the winning screen
 function winScreen() {
   player.visible = false;
   enemy1.visible = false;
@@ -645,6 +670,7 @@ function winScreen() {
   textSize(40);
   text("Congratulations, you won!", width/2, height/2);
 
+  //button
   let mainMenuButton = new Clickable();
   mainMenuButton.text = "Main Menu";
   mainMenuButton.textSize = 25;
