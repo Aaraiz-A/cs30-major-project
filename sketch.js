@@ -119,20 +119,20 @@ function theGunCharacteristics() {
 }
 
 function playerMovement() {
-  // if (canJump) {
-  //   if (kb.presses("w") || kb.presses(" ")) {
-  //     for (let i = 0; i < platforms.length; i++) {
-  //       if (player.colliding(platforms[i])) {
-  //         player.vel.y = -4;
-  //         canJump = false;
-  //         break;
-  //       }
-  //     }
-  //   }
-  // }
-  if (kb.presses("w")) {
-    player.vel.y = -4;
+  if (canJump) {
+    if (kb.presses("w") || kb.presses(" ")) {
+      for (let i = 0; i < platforms.length; i++) {
+        if (player.colliding(platforms[i])) {
+          player.vel.y = -4;
+          canJump = false;
+          break;
+        }
+      }
+    }
   }
+  // if (kb.presses("w")) {
+  //   player.vel.y = -4;
+  // }
   for (let i = 0; i < platforms.length; i++) {
     if (player.collides(platforms[i])) {
       canJump = true;
