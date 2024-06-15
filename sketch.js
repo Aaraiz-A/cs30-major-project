@@ -5,6 +5,7 @@
 let player;
 let enemy1;
 let levelMusic;
+let deathMusic;
 let platform;
 let mainCharacterGun;
 const WORLD_GRAVITY = 9.8;
@@ -13,15 +14,19 @@ let canJump = true;
 let bullets = [];
 let platforms = [];
 let checkpoints = [];
+let enemiesPerCheckpoint = [1, 4, 7, 10, 13];
 let dist1;
 let playerHealth = 100;
 let playerSpawnPoint;
 let state = "beginner";
 let titleMusic;
+let winPlatform;
 
 function preload() {
   titleMusic = loadSound('assets/Music/Juhani Junkala [Retro Game Music Pack] Title Screen.wav');
   levelMusic = loadSound('assets/Music/Juhani Junkala [Retro Game Music Pack] Level 2.wav');
+  winMusic = loadSound('assets/Music/Juhani Junkala [Retro Game Music Pack] Ending.wav');
+  deathMusic = loadSound('assets/Music/Lament_for_a_Warriors_Soul.mp3');
 }
 
 function setup() {
@@ -67,8 +72,15 @@ function draw() {
     gameOver();
   }
   else if (state === "game over") {
-    background(155);
+    background("red");
     drawGameOverScreen();
+  }
+  else if (state === "win") {
+    levelMusic.stop();
+    winScreen();
+    if (winMusic.isLooping() === false) {
+      winMusic.loop();
+    }
   }
 }
 
@@ -119,20 +131,20 @@ function theGunCharacteristics() {
 }
 
 function playerMovement() {
-  if (canJump) {
-    if (kb.presses("w") || kb.presses(" ")) {
-      for (let i = 0; i < platforms.length; i++) {
-        if (player.colliding(platforms[i])) {
-          player.vel.y = -4;
-          canJump = false;
-          break;
-        }
-      }
-    }
-  }
-  // if (kb.presses("w")) {
-  //   player.vel.y = -4;
+  // if (canJump) {
+  //   if (kb.presses("w") || kb.presses(" ")) {
+  //     for (let i = 0; i < platforms.length; i++) {
+  //       if (player.colliding(platforms[i])) {
+  //         player.vel.y = -4;
+  //         canJump = false;
+  //         break;
+  //       }
+  //     }
+  //   }
   // }
+  if (kb.presses("w")) {
+    player.vel.y = -4;
+  }
   for (let i = 0; i < platforms.length; i++) {
     if (player.collides(platforms[i])) {
       canJump = true;
@@ -154,6 +166,9 @@ function playerMovement() {
     player.x = playerSpawnPoint.x;
     player.y = playerSpawnPoint.y;
     player.vel.y = 0;
+  }
+  if (player.collides(winPlatform)) {
+    state = "win";
   }
 }
 
@@ -316,6 +331,43 @@ function thePlatforms() {
   let platform32 = new Sprite(8350, height/2 - 150, 200, 20, "static");
   platform32.color = "red";
   platforms.push(platform32);
+
+  //sixth checkpoint
+  let platform33 = new Sprite(8700, height/2 - 75, 5, 20, "static");
+  platform33.color = "red";
+  platforms.push(platform33);
+
+  let platform34 = new Sprite(8950, height/2 - 100, 90, 5, "static");
+  platform34.color = "red";
+  platforms.push(platform34);
+
+  let platform35 = new Sprite(9225, height/2 - 50, 90, 5, "static");
+  platform35.color = "red";
+  platforms.push(platform35);
+
+  let platform36 = new Sprite(9500, height/2, 90, 5, "static");
+  platform36.color = "red";
+  platforms.push(platform36);
+
+  let platform37 = new Sprite(9750, height/2 - 30, 90, 5, "static");
+  platform37.color = "red";
+  platforms.push(platform37);
+
+  let platform38 = new Sprite(10000, height/2 + 20, 90, 5, "static");
+  platform38.color = "red";
+  platforms.push(platform38);
+  
+  let platform39 = new Sprite(10150, height/2 + 40, 90, 5, "static");
+  platform39.color = "red";
+  platforms.push(platform39);
+
+  let platform40 = new Sprite(10350, height/2, 5, 5, "static");
+  platform40.color = "red";
+  platforms.push(platform40);
+
+  winPlatform = new Sprite(10650, height/2, 200, 200, "static");
+  winPlatform.color = "gold";
+  platforms.push(winPlatform);
 }
 
 function theCheckpoints() {
@@ -442,14 +494,15 @@ function drawHowToPlay() {
   text("In order to wall run, spam the jump button while running against the wall.", width/2, 160);
 
   fill("yellow");
-  rect(width/2 - 50, 350, 20, 20);
+  rect(width/2 - 50, 325, 20, 20);
   fill("green");
-  rect(width/2 + 50, 350, 20, 20);
+  rect(width/2 + 50, 325, 20, 20);
   
   fill("black");
   textAlign(CENTER);
   text("This yellow square is a check point. If you touch it, it will turn green, which means that will be your new spawn point if you fall.", width/2, 220);
   text(" If an enemy kills you, you will have to restart the level.", width/2, 270)
+  text("Everything is possible.", width/2, 400);
   
   let backButton = new Clickable();
   backButton.text = "Back to Main Menu";
@@ -469,6 +522,11 @@ function drawHowToPlay() {
 function drawCheckpoints() {
   for (let i = 0; i < checkpoints.length; i++) {
     checkpoints[i].checkCollision();
+    if (checkpoints[i].touched) {
+      for (let j = 0; j < enemiesPerCheckpoint[i]; j++) {
+        theEnemy1();
+      }
+    }
   }
 }
 
@@ -493,6 +551,12 @@ function Checkpoint(x, y, width, height, state) {
 }
 
 function drawGameOverScreen() {
+  if (levelMusic.isLooping()) {
+    levelMusic.stop();
+  }
+  if (deathMusic.isLooping() === false) {
+    deathMusic.loop();
+  }
   player.visible = false;
   enemy1.visible = false;
   mainCharacterGun.visible = false;
@@ -503,8 +567,9 @@ function drawGameOverScreen() {
     checkpoints[i].sprite.visible = false;
   }
 
+  fill("black");
   textAlign(CENTER);
-  text("Game Over", width/2, height/2);
+  text("You are DEAD!", width/2, height/2);
 
   let tryAgainButton = new Clickable();
   tryAgainButton.text = "Try Again?";
@@ -514,8 +579,9 @@ function drawGameOverScreen() {
   tryAgainButton.height = 45;
   tryAgainButton.cornerRadius = 10;
   tryAgainButton.x = width/2 - tryAgainButton.width/2;
-  tryAgainButton.y = height/2 + 50;
+  tryAgainButton.y = height/2 + 75;
   tryAgainButton.onPress = function() {
+    deathMusic.stop();
     state = "set up";
     playerHealth = 100;
     player.x = playerSpawnPoint.x;
@@ -536,9 +602,11 @@ function drawGameOverScreen() {
   mainMenuButton.height = 45;
   mainMenuButton.cornerRadius = 10;
   mainMenuButton.x = width/2 - mainMenuButton.width/2;
-  mainMenuButton.y = height/2 + 100;
+  mainMenuButton.y = height/2 + 150;
   mainMenuButton.onPress = function() {
+    deathMusic.stop();
     state = "title screen";
+    titleMusic.loop();
   };
   mainMenuButton.draw();
 }
@@ -559,4 +627,37 @@ function beginnerScreen() {
   textSize(40);
   textAlign(CENTER);
   text("Click Anywhere To Start", width/2, height/2 + 20);
+}
+
+function winScreen() {
+  player.visible = false;
+  enemy1.visible = false;
+  mainCharacterGun.visible = false;
+  for (let i = 0; i < platforms.length; i++) {
+    platforms[i].visible = false;
+  }
+  for (let i = 0; i < checkpoints.length; i++) {
+    checkpoints[i].sprite.visible = false;
+  }
+
+  background("gold");
+  fill("black");
+  textSize(40);
+  text("Congratulations, you won!", width/2, height/2);
+
+  let mainMenuButton = new Clickable();
+  mainMenuButton.text = "Main Menu";
+  mainMenuButton.textSize = 25;
+  mainMenuButton.textColor = color(0);
+  mainMenuButton.width = 200;
+  mainMenuButton.height = 45;
+  mainMenuButton.cornerRadius = 10;
+  mainMenuButton.x = width/2 - mainMenuButton.width/2;
+  mainMenuButton.y = height/2 + 100;
+  mainMenuButton.onPress = function() {
+    winMusic.stop();
+    state = "title screen";
+    titleMusic.loop();
+  };
+  mainMenuButton.draw();
 }
